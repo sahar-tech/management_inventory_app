@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/constants/colors.dart';
+import 'package:management_inventory_app/app/theme/colors.dart';
 import 'package:management_inventory_app/providers/language_provider.dart';
 import 'package:management_inventory_app/widgets/home/header_home.dart';
 import 'package:provider/provider.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/constants/colors.dart';
+import 'package:management_inventory_app/app/theme/colors.dart';
 import 'package:management_inventory_app/widgets/common/custom_button_icon.dart';
 import 'package:management_inventory_app/widgets/common/custom_text.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/constants/colors.dart';
+import 'package:management_inventory_app/app/theme/colors.dart';
 import 'package:management_inventory_app/screen/splash/splash.dart';
 import 'package:management_inventory_app/widgets/common/language_switcher.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/constants/routes.dart';
+import 'package:management_inventory_app/app/router/routes.dart';
 import 'package:management_inventory_app/providers/auth_provider.dart';
 import 'package:management_inventory_app/providers/product_provider.dart';
 import 'package:provider/provider.dart';
-import '../constants/strings.dart';
+import 'app/theme/strings.dart';
 import '../providers/theme_provider.dart';
-import '../constants/colors.dart';
+import 'app/theme/colors.dart';
 import '../providers/language_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
