@@ -1,0 +1,73 @@
+name: management_inventory_app
+description: "A new Flutter project."
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # التبعيات الأساسية
+  cupertino_icons: ^1.0.6
+
+  # Firebase
+  firebase_core: ^4.4.0
+  firebase_auth: ^6.1.4
+  cloud_firestore: ^6.1.2
+  firebase_storage: ^13.0.6
+
+  # إدارة الحالة
+  provider: ^6.1.1
+  get_it: ^9.2.0
+
+  # الترجمة الدولية
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
+  # التحكم في النماذج
+  flutter_form_builder: ^10.3.0+1
+
+  # تحميل الصور
+  cached_network_image: ^3.3.0
+  image_picker: ^1.1.2
+
+  # التنقل
+  go_router: ^17.0.1
+  shared_preferences: ^2.2.2
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # رفع التصميم
+  flutter_svg: ^2.0.9
+
+  # الرسوم المتحركة
+  lottie: ^3.1.0
+  animated_text_kit: ^4.2.2
+
+  # معرض الصور
+  carousel_slider: ^5.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.4.9
+  riverpod_generator: ^2.4.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/circle_bull.png
+
+  # الخطوط
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: fonts/Cairo-Regular.ttf
+        - asset: fonts/Cairo-Bold.ttf
+          weight: 700
