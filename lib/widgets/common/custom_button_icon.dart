@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/app/theme/colors.dart';
+import 'package:management_inventory_app/app/constants/app_colors.dart';
 import 'package:management_inventory_app/widgets/common/custom_text.dart';
 
 class CustomButtonIcon extends StatelessWidget {
@@ -24,7 +24,7 @@ class CustomButtonIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: onPressed,
-      icon: icon != null ? Icon(icon, color: textColor ?? Colors.white) : const Icon(Icons.add, color: Colors.white),
+      icon: Icon(icon, color: textColor ?? Colors.white),
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? AppColors.buttonPrimary,
         shape: RoundedRectangleBorder(

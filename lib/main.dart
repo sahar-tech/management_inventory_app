@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:management_inventory_app/app/router/routes.dart';
 import 'package:management_inventory_app/providers/auth_provider.dart';
-import 'package:management_inventory_app/providers/product_provider.dart';
 import 'package:provider/provider.dart';
-import 'app/theme/strings.dart';
+import 'app/constants/strings.dart';
 import '../providers/theme_provider.dart';
-import 'app/theme/colors.dart';
+import 'app/constants/app_colors.dart';
 import '../providers/language_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:go_router/go_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

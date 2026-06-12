@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/app/theme/colors.dart';
+import 'package:management_inventory_app/app/constants/app_colors.dart';
 
 class CardButton extends StatelessWidget {
   final  IconData? icon;

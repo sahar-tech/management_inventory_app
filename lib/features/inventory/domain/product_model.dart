@@ -101,7 +101,7 @@ class Product {
       category: category ?? this.category,
       providerId: providerId ?? this.providerId,
       providerName: providerName ?? this.providerName,
-      imageUrls: imageUrls ?? this.imageUrls,
+      imageUrls: imageUrls ?? imageUrls,
       quality: quality ?? this.quality,
       isFavorite: isFavorite ?? this.isFavorite,
       createdAt: createdAt ?? this.createdAt,

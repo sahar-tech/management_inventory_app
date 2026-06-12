@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/app/theme/colors.dart';
 
 class Splash extends StatelessWidget {
   const Splash({super.key});

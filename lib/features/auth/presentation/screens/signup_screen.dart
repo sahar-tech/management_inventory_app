@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/auth.dart';
 import 'package:provider/provider.dart';
 import '../../exception/login_exceptions.dart';
 import '../../providers/auth_provider.dart';

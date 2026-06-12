@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:management_inventory_app/models/product.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:management_inventory_app/widgets/common/custom_text.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
