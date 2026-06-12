@@ -1,0 +1,1 @@
+ P:\\Flutter\ learn\ Projects\\management_inventory_app\\.dart_tool\\flutter_build\\a938eda5a856793c606f9e4e28eb667e\\native_assets.json: 
