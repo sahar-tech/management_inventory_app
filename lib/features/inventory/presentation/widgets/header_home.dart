@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:management_inventory_app/app/widgets/custom_text.dart';
 import 'package:management_inventory_app/providers/auth_provider.dart';
-import 'package:management_inventory_app/widgets/common/custom_text.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/exception/login_exceptions.dart';
+import 'package:management_inventory_app/app/exceptions/login_exception.dart';
+import 'package:management_inventory_app/app/widgets/custom_button.dart';
+import 'package:management_inventory_app/app/widgets/custom_input.dart';
+import 'package:management_inventory_app/app/widgets/custom_text.dart';
 import 'package:management_inventory_app/providers/auth_provider.dart';
+import 'package:management_inventory_app/providers/language_provider.dart';
 import 'package:provider/provider.dart';
-import '../../providers/language_provider.dart';
-import '../../widgets/common/custom_button.dart';
-import '../../widgets/common/custom_input.dart';
-import '../../widgets/common/custom_text.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {

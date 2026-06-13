@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:management_inventory_app/widgets/common/custom_button_icon.dart';
-import 'package:management_inventory_app/widgets/common/custom_text.dart';
+import 'package:management_inventory_app/app/widgets/custom_button_icon.dart';
+import 'package:management_inventory_app/app/widgets/custom_text.dart';
 
 class ButtonActions extends StatelessWidget {
   final bool isArabic;

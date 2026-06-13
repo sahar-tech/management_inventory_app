@@ -1,129 +1,100 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/auth.dart';
-import 'package:management_inventory_app/providers/auth_provider.dart';
-import 'package:management_inventory_app/screen/auth/reset_password_screen.dart';
-import 'package:management_inventory_app/screen/home/home_screen.dart';
-import 'package:management_inventory_app/screen/auth/login_screen.dart';
-import 'package:management_inventory_app/screen/home/product/add_product.dart';
-import 'package:management_inventory_app/screen/home/product/product_details.dart';
-import 'package:management_inventory_app/screen/home/profile/profile_details.dart';
-import 'package:management_inventory_app/screen/auth/signup_screen.dart';
-import 'package:management_inventory_app/screen/home/supplier/add_supplier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:management_inventory_app/screen/splash/splash.dart';
-import 'package:management_inventory_app/widgets/home/base_home.dart';
+import '../../../features/auth/presentation/auth_controller.dart';
 
-class AppRouteNames {
-  static const String auth = '/';
-  static const String splash = '/splash';
-  static const String login = '/login';
-  static const String signup = '/signup';
-  static const String resetPassword = '/reset-password';
-  static const String home = '/home';
-  static const String products = '/products';
-  static const String addProduct = '/add-product';
-  static const String editProduct = '/edit-product';
-  static const String productDetail = '/product-detail';
-  static const String addProvider = '/add-provider';
-  static const String profile = '/profile';
-}
+// 💡 مفتاح التنقل العالمي لمراقبة حالة الشاشات برمجياً
+final navigatorKey = GlobalKey<NavigatorState>();
 
-class AppRoute {
-  final AuthProvider authProvider;
+// 🌍 مزوّد Riverpod المسؤول عن بناء وإدارة نظام المسارات بالكامل في الذاكرة
+final appRouterProvider = Provider<GoRouter>((ref) {
+  // الاستماع لحالة تسجيل الدخول (هل يوجد حساب مسجل أم لا؟)
+  final authState = ref.watch(authStateStreamProvider);
+  // الاستماع لحالة بيانات المستخدم (الصلاحية والتفعيل)
+  final userDataAsync = ref.watch(currentUserDataProvider);
 
-  AppRoute({required this.authProvider});
-
-  GoRouter get router => GoRouter(
-    initialLocation: AppRouteNames.splash,
-    refreshListenable: GoRouterRefreshStream(authProvider.authStateChanges),
+  return GoRouter(
+    navigatorKey: navigatorKey,
+    initialLocation: '/splash', // نقطة الانطلاق الأولى للتطبيق دائماً
+    
+    // 🛡️ الخوارزمية الذكية لحماية المسارات والتوجيه التلقائي (Redirect Guard)
     redirect: (context, state) {
-      print(
-        '///////////////////////////////////////////////////////////:  path=${state.matchedLocation},   Auth State: isLoading=${authProvider.isLoading}, user=${authProvider.user}',
-      ); // Debug print
+      final isLoggingIn = state.matchedLocation == '/login';
+      final isRegistering = state.matchedLocation == '/signup';
+      final isSplashing = state.matchedLocation == '/splash';
 
-      if (authProvider.isLoading == true) {
-        return AppRouteNames.splash; // Stay on the splash screen while loading
+      // 1. إذا كان الفايربيس لا يزال يحمل أو يجلب البيانات، ابق في الـ Splash
+      if (authState.isLoading || userDataAsync.isLoading) return null;
+
+      final user = authState.value;
+      final userData = userDataAsync.value;
+
+      // 2. حالة عدم وجود مستخدم مسجل
+      if (user == null) {
+        if (isLoggingIn || isRegistering) return null; // اسمح له بالذهاب لصفحات الدخول
+        return '/login'; // أي محاولة أخرى اطرده لصفحة الدخول فوراً
       }
 
-      final isAuthenticated = authProvider.user != null;
-      final isLoggingIn = state.matchedLocation == AppRouteNames.login;
-      final isInSplash = state.matchedLocation == AppRouteNames.splash;
-
-      if (!isAuthenticated) {
-        return AppRouteNames.login; // Redirect to login if not authenticated
+      // 3. حالة وجود مستخدم ولكن قاعدة البيانات (Firestore) لم تنشئ حسابه بعد
+      if (userData == null) {
+        return '/login';
       }
 
-      if (isAuthenticated && (isLoggingIn || isInSplash)) {
-        return AppRouteNames.home; // Redirect to home if already authenticated
+      // 4. سيناريو الحساب غير المفعّل (وينتظر موافقة زوجكِ)
+      if (!userData.isActive && userData.role != 'admin') {
+        return '/waiting'; // خذه لصفحة الانتظار ولا تسمح له بالتحرك
       }
 
-      return null; // No redirection needed
+      // 5. إذا كان الحساب مفعّلاً وسليماً وهو في صفحات الدخول، خذه لصفحة العمليات فوراً
+      if (isLoggingIn || isRegistering || isSplashing) {
+        if (userData.role == 'admin') {
+          return '/admin-dashboard'; // زوجكِ يذهب للوحة تحكم الإدارة
+        } else {
+          return '/home'; // العمال يذهبون لصفحة العمليات المخصصة لهم
+        }
+      }
+
+      return null; // اترك المستخدم في مساره الحالي إذا تطابق مع الشروط
     },
-    routes: [
-      ShellRoute(
-        builder: (context, state, child) {
-          return Auth(child: child);
-        },
-        routes: [
-          GoRoute(
-            path: AppRouteNames.splash,
-            builder: (context, state) => Splash(),
-          ),
-          GoRoute(
-            path: AppRouteNames.login,
-            builder: (context, state) => LoginScreen(),
-          ),
-          GoRoute(
-            path: AppRouteNames.signup,
-            builder: (context, state) => SignUpScreen(),
-          ),
-          GoRoute(
-            path: AppRouteNames.resetPassword,
-            builder: (context, state) => ResetPasswordScreen(),
-          ),
 
-          ShellRoute(
-            builder: (context, state, child) {
-              return HomeScreen(child: child);
-            },
-            routes: [
-              GoRoute(
-                path: AppRouteNames.home,
-                builder: (context, state) => BaseHome(isArabic: false),
-              ),
-              GoRoute(
-                path: AppRouteNames.addProduct,
-                builder: (context, state) => AddProductScreen(isArabic: false),
-              ),
-              GoRoute(
-                path: AppRouteNames.addProvider,
-                builder: (context, state) => AddSupplierScreen(isArabic: false),
-              ),
-              GoRoute(
-                path: AppRouteNames.productDetail,
-                builder: (context, state) =>
-                    ProductDetailsScreen(isArabic: false),
-              ),
-              GoRoute(
-                path: AppRouteNames.profile,
-                builder: (context, state) =>
-                    ProfileDetailsScreen(isArabic: false),
-              ),
-            ],
-          ),
-        ],
+    // 📋 قائمة شجرة المسارات والشاشات الرسمية للتطبيق
+    routes: [
+      GoRoute(
+        path: '/splash',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: CircularProgressIndicator()), // سنبدلها لاحقاً بصفحة الـ Splash المصممة
+        ),
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('واجهة تسجيل الدخول 🔑')), // سنربطها بـ LoginScreen
+        ),
+      ),
+      GoRoute(
+        path: '/signup',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('واجهة إنشاء حساب للعمال 📝')), // سنربطها بـ SignupScreen
+        ),
+      ),
+      GoRoute(
+        path: '/waiting',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('شاشة الانتظار: بانتظار تفعيل المدير ⏳')), 
+        ),
+      ),
+      GoRoute(
+        path: '/admin-dashboard',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('مرحباً بك يا مدير: لوحة تحكم زوجكِ 📊')), 
+        ),
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('واجهة العمليات للعمال المفعّلين 📦')), 
+        ),
       ),
     ],
   );
-}
-
-class GoRouterRefreshStream extends ChangeNotifier {
-  GoRouterRefreshStream(Stream stream) {
-    notifyListeners();
-    _subscription = stream.asBroadcastStream().listen((_) => notifyListeners());
-  }
-
-  late final StreamSubscription _subscription;
-}
+});

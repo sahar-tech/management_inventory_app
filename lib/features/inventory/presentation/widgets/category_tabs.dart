@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:management_inventory_app/app/constants/app_colors.dart';
-import 'package:management_inventory_app/widgets/common/custom_text.dart';
+import 'package:management_inventory_app/app/widgets/custom_text.dart';
 
 class CategoryTabs extends StatefulWidget {
   final bool isArabic;

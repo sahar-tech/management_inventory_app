@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:management_inventory_app/app/constants/app_colors.dart';
-import 'package:management_inventory_app/models/product.dart';
-import 'package:management_inventory_app/widgets/common/card_button.dart';
-import 'package:management_inventory_app/widgets/common/custom_text.dart';
+import 'package:management_inventory_app/app/widgets/card_button.dart';
+import 'package:management_inventory_app/app/widgets/custom_text.dart';
+import 'package:management_inventory_app/features/inventory/domain/product_model.dart';
 
 class ProductCard extends StatefulWidget {
   final bool isArabic;

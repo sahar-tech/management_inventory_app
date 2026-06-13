@@ -1,78 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/app/router/routes.dart';
-import 'package:management_inventory_app/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
-import 'app/constants/strings.dart';
-import '../providers/theme_provider.dart';
-import 'app/constants/app_colors.dart';
-import '../providers/language_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:management_inventory_app/app/constants/app_strings.dart';
+import 'package:management_inventory_app/app/constants/app_colors.dart';
+import 'package:management_inventory_app/app/routes/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  
+  runApp(
+    // 🌍 التغليف السحري الأساسي لتشغيل Riverpod في كامل المشروع
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+// ⚡ تحويل الصنف إلى ConsumerWidget لكي يتعرف على الـ WidgetRef بأمان ومثالية
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => LanguageProvider()),
-        //  ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-      ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          return Consumer<LanguageProvider>(
-            builder: (context, languageProvider, child) {
-              return Consumer<AuthProvider>(
-                builder: (context, authProvider, child) {
-                  return MaterialApp.router(
-                    debugShowCheckedModeBanner: false,
-                    title: languageProvider.isArabic
-                        ? AppStrings.appNameAr
-                        : AppStrings.appNameEn,
-                    theme: ThemeData(
-                      scaffoldBackgroundColor: AppColors.primaryColor,
-                      appBarTheme: const AppBarTheme(
-                        backgroundColor: AppColors.primaryColor,
-                      ),
-                      textTheme: ThemeData.light().textTheme.copyWith(
-                        bodyLarge: TextStyle(
-                          fontFamily: languageProvider.isArabic
-                              ? AppStrings.fontCairo
-                              : AppStrings.fontPoppins,
-                        ),
-                        bodyMedium: TextStyle(
-                          fontFamily: languageProvider.isArabic
-                              ? AppStrings.fontCairo
-                              : AppStrings.fontPoppins,
-                        ),
-                        titleLarge: TextStyle(
-                          fontFamily: languageProvider.isArabic
-                              ? AppStrings.fontCairo
-                              : AppStrings.fontPoppins,
-                        ),
-                        titleMedium: TextStyle(
-                          fontFamily: languageProvider.isArabic
-                              ? AppStrings.fontCairo
-                              : AppStrings.fontPoppins,
-                        ),
-                      ),
-                    ),
-                    routerConfig: AppRoute(authProvider:authProvider).router,
-                  );
-                },
-              );
-            },
-          );
-        },
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 🗺️ قراءة مزوّد المسارات الحديث والذكي من ريفر بود
+    final router = ref.watch(appRouterProvider);
+
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: AppStrings.appNameAr, // سنقوم بربط مزوّد اللغات الحديث لاحقاً بسطر واحد
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.primaryColor,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.primaryColor,
+        ),
+        // إعداد الخط الافتراضي الاحترافي (Cairo) للتطبيق ككل
+        fontFamily: AppStrings.fontCairo,
       ),
+      // ربط الـ GoRouter المطور تلقائياً لإدارة الواجهات والصلاحيات
+      routerConfig: router,
     );
   }
 }

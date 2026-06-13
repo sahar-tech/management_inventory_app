@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/widgets/common/search_bar_icon.dart';
-import 'package:management_inventory_app/widgets/home/button_actions.dart';
-import 'package:management_inventory_app/widgets/home/category_tabs.dart';
-import 'package:management_inventory_app/widgets/home/featured_product_filter.dart';
-import 'package:management_inventory_app/widgets/home/product_grid.dart';
+import 'package:management_inventory_app/app/widgets/search_bar_icon.dart';
+import 'package:management_inventory_app/features/inventory/presentation/widgets/button_actions.dart';
+import 'package:management_inventory_app/features/inventory/presentation/widgets/category_tabs.dart';
+import 'package:management_inventory_app/features/inventory/presentation/widgets/featured_product_filter.dart';
+import 'package:management_inventory_app/features/inventory/presentation/widgets/product_grid.dart';
 
 class BaseHome extends StatefulWidget {
   final bool isArabic;

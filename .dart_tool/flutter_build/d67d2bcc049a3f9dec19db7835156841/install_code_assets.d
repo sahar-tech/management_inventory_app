@@ -1,0 +1,1 @@
+ P:\\Fakhama\ Projects\\management_inventory_app\\.dart_tool\\flutter_build\\d67d2bcc049a3f9dec19db7835156841\\native_assets.json: 

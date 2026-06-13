@@ -1,38 +1,31 @@
-class UserModel {
-  String? uid;
-  String email;
-  String fullName;
-  String? phoneNumber;
-  String? profileImageUrl;
-  String language;
+import 'package:json_annotation/json_annotation.dart';
 
-  UserModel({
-    this.uid,
+part 'user_model.g.dart';
+
+@JsonSerializable()
+class UserModel {
+  final String uid;
+  final String email;
+  final String username;  
+  final String? fullName;
+  final String? phoneNumber;
+  final String? profileImageUrl;
+  final String role;
+  final bool isActive;      
+
+  const UserModel({
+    required this.uid,
     required this.email,
-    required this.fullName,
-    this.phoneNumber,
-    this.profileImageUrl,
-    this.language = 'ar',
+    required this.username,
+     this.fullName,
+     this.phoneNumber,
+     this.profileImageUrl,
+    required this.role,
+    required this.isActive,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'email': email,
-      'fullName': fullName,
-      'phoneNumber': phoneNumber,
-      'profileImageUrl': profileImageUrl,
-      'language': language,
-    };
-  }
+ factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
-  factory UserModel.fromMap(String uid, Map<String, dynamic> map) {
-    return UserModel(
-      uid: uid,
-      email: map['email'] ?? '',
-      fullName: map['fullName'] ?? '',
-      phoneNumber: map['phoneNumber'],
-      profileImageUrl: map['profileImageUrl'],
-      language: map['language'] ?? 'ar',
-    );
-  }
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
 }

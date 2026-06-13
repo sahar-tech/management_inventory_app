@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/user.dart';
+import 'package:management_inventory_app/features/auth/domain/user_model.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,6 +30,9 @@ class AuthService {
         uid: userCredential.user!.uid,
         email: email,
         fullName: '',
+        username: '',
+        role: 'worker',
+        isActive: false,
        );
 
     } catch (e) {
@@ -53,7 +56,9 @@ class AuthService {
         uid: userCredential.user!.uid,
         email: email,
         fullName: fullName,
-        language: 'ar',
+        username: '',
+        role: 'worker',
+        isActive: false,
       );
       
      /*  await _firestore
@@ -83,7 +88,7 @@ class AuthService {
     await _firestore
         .collection('users')
         .doc(user.uid)
-        .update(user.toMap());
+        .update(user.toJson());
   }
 
   // الاستماع لتغيرات المصادقة

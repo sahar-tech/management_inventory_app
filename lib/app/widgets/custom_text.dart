@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:management_inventory_app/app/constants/strings.dart';
+import 'package:management_inventory_app/app/constants/app_strings.dart';
 import 'package:management_inventory_app/providers/language_provider.dart';
 import 'package:provider/provider.dart';
 

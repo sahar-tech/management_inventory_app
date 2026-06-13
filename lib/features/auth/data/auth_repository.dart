@@ -50,7 +50,7 @@ class AuthRepository {
   Future<UserCredential> signUpWorker({
     required String email,
     required String password,
-    required String name,
+    required String username,
   }) async {
     try {
       final userCredential = await _auth.createUserWithEmailAndPassword(
@@ -62,7 +62,7 @@ class AuthRepository {
         // إنشاء كائن المستخدم بالصلاحيات المقفلة افتراضياً
         final newUser = UserModel(
           uid: userCredential.user!.uid,
-          name: name,
+          username: username,
           email: email,
           role: 'worker',    // الصلاحية الافتراضية عامل حتى يغيرها المدير
           isActive: false,  // الحساب مغلق وموقوف تلقائياً بانتظار التفعيل
